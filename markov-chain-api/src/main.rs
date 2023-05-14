@@ -11,22 +11,21 @@ struct AppState {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let host = std::env::args().nth(1).unwrap_or(String::from("127.0.0.1"));
-    let port = std::env::args().nth(2).unwrap_or(String::from("8080"));
+    let host_and_port = std::env::args().nth(1).unwrap_or(String::from("127.0.0.1:8080"));
 
-    println!("Server launched at: {host}:{port}");
+    println!("Server launched at: {host_and_port}");
     
     HttpServer::new(move || {
         App::new()
         .app_data(web::Data::new(AppState {
-        markov_chain: Mutex::new(MarkovChain::new())
+            markov_chain: Mutex::new(MarkovChain::new())
         }))
         .service(web::scope("/api/markov_chain")
                     .route("", web::get().to(generate_sentence))
                     .route("", web::post().to(add_sentence))
         )
     })
-    .bind((host, port.parse::<u16>().unwrap()))?
+    .bind(host_and_port)?
     .run()
     .await
 }

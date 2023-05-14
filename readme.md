@@ -8,7 +8,7 @@ Markov Chain Discord Bot.
 
 # Installation
 1. Clone repo
-2. Build api or download binaries from release
+2. Build server
     ```bash
     cd markov-chain-api
     cargo build --release
@@ -19,9 +19,10 @@ Markov Chain Discord Bot.
     cd discord-bot
     python3 -m pip install requirements.txt
     ```
-5. Run server
+5. Run server\
+    default `<host>:<port>` is `127.0.0.1:8080`
     ```bash
-    markov-chain-api.<ext> <host> <port>
+    markov-chain-api.<ext> <host>:<port>
     ```
 6. Configure discord bot\
     edit `config.py` in your favorite text editor or IDE
@@ -29,10 +30,10 @@ Markov Chain Discord Bot.
     # config.py
     TOKEN = "token" # Your discord bot token
     URL = "https://<host>:<port?>" # Server url
-    FETCH_HISTORY_CHANNEL_ID = 342145 # Channel from which all message history will be collected
+    SERVER_ID = 755679434585 # Your discord server id
+    CHANNEL_BLACK_LIST = [625237354678, 154572567, 9564568478] # Channel IDs from wich data will not be collected
     ```
-7. **ONLY ON FIRST RUN**\
-    this fetches all messages from `FETCH_HISTORY_CHANNEL_ID` channel, you can change it in `config.py` and run again
+7. **ONLY ON FIRST RUN**
     ```bash
     python3 discord-fetch-history.py
     ```
@@ -44,4 +45,3 @@ Markov Chain Discord Bot.
 # Problems
 - Dataset have no weights, so it grow fast af (weights implemented by repeatedly adding a word to the next word list, so random have more chance to choose a more relevant word)
 - Words don't convert to the initial form
-- Generation based on words instead of characters

@@ -1,0 +1,2 @@
+[alias]
+runx = ["run", "--", "localhost:80"]

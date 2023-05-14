@@ -1,7 +1,7 @@
 import requests, random
 from interactions import Client, Intents, listen, slash_command, SlashContext
 from interactions.ext import prefixed_commands
-from config import TOKEN, URL, MAIN_CHANNEL_ID
+from config import TOKEN, URL
 
 bot = Client(intents=Intents.ALL, sync_interactions=True)
 prefixed_commands.setup(bot)
@@ -27,6 +27,5 @@ async def generate(ctx: SlashContext):
   generated_text = requests.get(f'{URL}/api/markov_chain').content.decode('utf-8') 
   print(f'Generated: {generated_text}')
   await ctx.send(generated_text)
-
 
 bot.start(TOKEN)
